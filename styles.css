@@ -1,0 +1,382 @@
+@font-face {
+    font-family: "Supply Mono";
+    src: url(./fonts/Supply-Regular.otf);
+}
+
+@font-face {
+    font-family: "Graphik";
+    src: url(./fonts/Graphik-Bold-Trial.otf);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Graphik", sans-serif;
+}
+
+/* nav */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 15vw;
+    
+}
+
+.nav-logo {
+    padding-right: 5vw;
+    cursor: pointer;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+  
+li {
+    float: left;
+}
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    font-family: "Supply Mono";
+    font-size: 1rem;
+}
+  
+li a:hover:not(.active) {
+    background-color: #1c1c1c;
+    transition: .5s ease-in-out;
+    text-decoration: overline;
+}
+  
+.active {
+    background-color: #ffffff;
+    color: #1c1c1c;
+    text-decoration: overline;
+}
+
+
+/* glowing button */
+
+body {
+    place-content: center;
+    gap: 2rem;
+    min-height: 100vh;
+    color: #fff;
+    background-color: #1c1c1c;
+}
+  
+.button {
+    cursor: pointer;
+    font-size: 5.5rem;
+    font-family: inherit;
+    font-weight: 700;
+    color: #1c1c1c;
+    background-color: rgba(237, 237, 237, 0);
+    padding: 1.25rem 2rem;
+    border: 0;
+    border-radius: 0.5rem;
+    transition: .5s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+}
+
+
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.00);
+    color: #ffffff;
+    /* border: 1px solid white; */
+    transition: .33s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    /* letter-spacing: 0.33rem; */
+    /* font-size: 1.58rem; */
+    /* text-decoration: underline; */
+
+    /* mix-blend-mode: difference; */
+
+
+
+    /* filter: blur(1px);
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black; */
+}
+
+/* bottom fade up */
+.bottom {
+    background-image: linear-gradient(0deg, #fff 0%, #fff 50%, transparent 50.1%);
+    background-position: 100% 100%;
+    background-size: 100% 0%;
+}
+.bottom:hover {
+    background-size: 100% 200%;
+}
+
+ /* outlined text */
+span {
+    /* mix-blend-mode: difference; */
+    cursor: pointer;
+    -webkit-text-stroke-color: #fff;
+    -webkit-text-stroke-width: 0.09rem;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s cubic-bezier(0.67, 0.01, 0.15, 0.98);
+}
+
+/* span:hover {
+    mix-blend-mode: lighten;
+    transition: background-size 0.5s cubic-bezier(0.67, 0.01, 0.15, 0.98);
+} */
+
+
+.glow-effect {
+    --glow-line-color: #fff;
+    --glow-line-thickness: 4px;
+    --glow-line-length: 20px;
+    --glow-blur-color: #fff;
+    --glow-blur-size: 20px;
+    --glow-offset: 0px;
+    --animation-speed: 1000ms;
+    /* do not change, used for calculations */
+    --container-offset: 100px;
+    position: relative;
+}
+  
+.glow-container {
+    pointer-events: none;
+    position: absolute;
+    inset: calc(var(--container-offset) / -2);
+    width: calc(100% + var(--container-offset));
+    height: calc(100% + var(--container-offset));
+    opacity: 0;
+    /* outline: 3px solid blue; */
+}
+  
+.glow-blur,
+.glow-line {
+    width: calc(100% - var(--container-offset) + var(--glow-offset));
+    height: calc(100% - var(--container-offset) + var(--glow-offset));
+    x: calc((var(--container-offset) / 2) + calc(var(--glow-offset) / -2));
+    y: calc((var(--container-offset) / 2) + calc(var(--glow-offset) / -2));
+    rx: 0.5rem;
+    fill: transparent;
+    stroke: black;
+    stroke-width: 5px;
+    stroke-dasharray: var(--glow-line-length) calc(50px - var(--glow-line-length));
+}
+  
+.glow-effect:is(:hover, :focus) :is(.glow-line, .glow-blur) {
+    stroke-dashoffset: -80px;
+    transition: stroke-dashoffset var(--animation-speed) ease-in;
+}
+  
+.glow-line {
+    stroke: var(--glow-line-color);
+    stroke-width: var(--glow-line-thickness);
+}
+  
+.glow-blur {
+    filter: blur(var(--glow-blur-size));
+    stroke: var(--glow-blur-color);
+    stroke-width: var(--glow-blur-size);
+}
+  
+.glow-effect:is(:hover, :focus) .glow-container {
+    animation: glow-visibility ease-in-out var(--animation-speed);
+}
+  
+@keyframes glow-visibility {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    25%,
+    75% {
+      opacity: 1;
+    }
+}
+  
+.glow-effect[data-glow-animation="false"] {
+    --glow-line-length: 50px;
+}
+.glow-effect[data-glow-offset="true"] {
+    --glow-offset: 10px;
+}
+  
+.glow-effect[data-glow-animation="grow"]:is(:hover, :focus) .glow-container {
+    scale: 1.3;
+    transition: scale var(--animation-speed) linear;
+}
+
+
+
+/* content sections */
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c;
+    min-height: 100vh;
+
+
+    background-image: url(./images/diamond-1-bw.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* backdrop-filter: contrast(300%); */
+}
+
+.laser-section{
+    background-image: url(./images/diamond-2.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.gems-section {
+    background-image: url(./images/diamond-6.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.careers-section {
+    background-image: url(./images/career-1.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #151515;
+    min-height: 20vh;
+    justify-content: space-between;
+    padding: 0 15vw;
+}
+
+.footer-links {
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.footer-links p {
+    font-family: "Supply Mono";
+    padding: .5rem 0;
+}
+
+.footer-links p:hover {
+    opacity: .5;
+    text-decoration: overline;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  .rotating {
+    -webkit-animation: rotating 5s linear infinite;
+    -moz-animation: rotating 5s linear infinite;
+    -ms-animation: rotating 5s linear infinite;
+    -o-animation: rotating 5s linear infinite;
+    animation: rotating 5s linear infinite;
+  }
+
+
+.logo-container {
+    transition: .5s ease-in-out;
+    cursor: pointer;
+    scale: 1;
+    opacity: 1;
+
+}
+
+.logo-container:hover {
+opacity: .5;
+transition: .5s ease-in-out;
+cursor: pointer;
+scale: 1.05;
+}
+
+@media screen and (max-width: 700px) {
+    .button {
+        font-size:4rem;
+    }
+
+    span {
+        -webkit-text-stroke-width: 0.075rem;
+        
+    }
+
+    .glow-blur,
+    .glow-line {
+    width: calc(100% - var(--container-offset) + var(--glow-offset));
+    height: calc(100% - var(--container-offset) + var(--glow-offset));
+        
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0rem 0 0 15vw;
+        
+    }
+
+    .nav-logo {
+        padding-right: 25%;
+    }
+
+    li a {
+        padding: 20px 65px 20px 40px;
+    }
+
+    footer {
+        display: flex;
+        padding: 10rem 15vw;
+        flex-direction: column;
+    }
+
+    .footer-links{
+        padding: 5rem 0 0 0;
+    }
+}
